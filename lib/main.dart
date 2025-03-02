@@ -9,7 +9,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: "Hello world", home: Home());
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "Hello world", home: Home());
   }
 }
 
@@ -19,22 +21,55 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: Text("Home screen", style: TextStyle(color: Colors.white)),
+        leading: Icon(Icons.home_filled, color: Colors.white),
+        actions: [IconButton(onPressed: () {
+        //  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Money has been transfer")));
+
+          showDialog(context: context, builder: (context){
+            return AlertDialog(
+              title: Text("Send money"),
+              content: Text("Are you sure that send money"),
+              actions: [
+
+              ],
+            );
+          });
+        }, icon: Icon(Icons.add))],
+      ),
+      backgroundColor: Colors.grey,
       body: Center(
-        // child: Text(
-        //
-        //   textAlign: TextAlign.center,
-        //   "Hello world, We are starting application in flutter",
-        //   maxLines: 1,
-        //   style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600,
-        //   backgroundColor: Colors.red,
-        //   color: Colors.white,
-        //   overflow: TextOverflow.ellipsis
-        //   ),
-        //
-        // ),
-        // child: Icon(Icons.android,size: 100,color: Colors.red,),
-        // child: Image.network("https://static.vecteezy.com/system/resources/previews/047/205/912/non_2x/asian-woman-is-taking-a-picture-with-a-camera-photo.jpg"),
-        child: Image.asset("images/cate.jpg",width: 300,height: 300,fit:BoxFit.scaleDown,),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("How"),
+            Text("We are Bangladeshi"),
+            Text("you"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text("He is fate "),
+                Text("boy"),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.date_range),
+                        Text("We are proud for you"),
+                      ],
+                    ),
+
+                    Text("Subrata"),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
