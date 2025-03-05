@@ -18,59 +18,35 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size);
-    print(MediaQuery.of(context).size.height);
-    print(MediaQuery.of(context).size.width);
-    print(MediaQuery.of(context).orientation);
-    print(MediaQuery.of(context).displayFeatures);
-
-    print(MediaQuery.displayFeaturesOf(context));
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.green, title: Text("Home")),
-      /* body: Center(
-        child: Wrap(
-          alignment: WrapAlignment.center,
-          crossAxisAlignment: WrapCrossAlignment.start,
-          spacing: 5,
-          children: [
-            Text(MediaQuery.orientationOf(context).toString()),
-            Text(MediaQuery.orientationOf(context).toString()),
-            Text(MediaQuery.orientationOf(context).toString()),
-            Text(MediaQuery.orientationOf(context).toString()),
-            Text(MediaQuery.orientationOf(context).toString()),
-            Text(MediaQuery.orientationOf(context).toString()),
-            Text(MediaQuery.orientationOf(context).toString()),
-            Text(MediaQuery.orientationOf(context).toString()),
-          ],
-        ),
-      ),*/
-      /* body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          if(constraints.maxHeight < 400){
-            return Center(child: Text("mobile"));
-          }else if(constraints.maxHeight < 600){
-            return Center(child: Text("Tablet"));
-          }else if(constraints.maxHeight < 600){
-            return Center(child: Text("Laptop"));
-          }
-          return Center(child: Text("Desktop"));
-        },
-      ),*/
-      body: OrientationBuilder(builder: (context,orientation){
-        if(orientation == Orientation.landscape){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.red,
-          );
-        }else{
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.pink,
-          );
-        }
-      }),
+      body: Column(
+        children: [
+          // Flexible(
+          //   flex: 1,
+          //   fit: FlexFit.tight,
+          //   child: Container(width: 100, color: Colors.red),
+          // ),
+          // Expanded(
+          //     flex: 2,
+          //     child: Container(width: 100, color: Colors.yellow)),
+          // Expanded(
+          //     flex: 1,
+          //     child: Container(width: 100, height: 100, color: Colors.green)),
+          // SizedBox(
+          //   width: MediaQuery.sizeOf(context).width,
+          //   height: 232,
+          //   child: FractionallySizedBox(
+          //     widthFactor: .9,
+          //     heightFactor: .4,
+          //     child: Container(
+          //       color: Colors.red,
+          //     ),
+          //   ),
+          // )
+          AspectRatio(aspectRatio: 13/12,child: Container(color: Colors.red,),)
+        ],
+      ),
     );
   }
 }
