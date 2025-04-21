@@ -60,8 +60,8 @@ class Home extends StatelessWidget {
         return Center(child: Text("Version 2"));
       },),*/
 
-      body: OrientationBuilder(builder: ( context, Orientation) {
-        if(Orientation == Orientation.index){
+      body: OrientationBuilder(builder: ( context, orientation) {
+        if(rientation == Orientation.landscape){
           return Container(
             height: double.infinity,
             width: double.infinity,
