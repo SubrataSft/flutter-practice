@@ -61,7 +61,7 @@ class Home extends StatelessWidget {
       },),*/
 
       body: OrientationBuilder(builder: ( context, orientation) {
-        if(rientation == Orientation.landscape){
+        if(orientation == Orientation.landscape){
           return Container(
             height: double.infinity,
             width: double.infinity,
