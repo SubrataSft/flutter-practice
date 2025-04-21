@@ -1,48 +1,6 @@
-/*import 'package:flutter/cupertino.dart';
 
-void main(){
-  runApp(IOSStyle());
-}
-
-class IOSStyle extends StatelessWidget {
-  const IOSStyle({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoApp(
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          middle: Text("Hello Ios Phone"),
-          trailing: CupertinoButton.filled(child: Icon(CupertinoIcons.add), onPressed: (){}),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CupertinoActivityIndicator(
-                    radius: 24,
-                  ),
-                  CupertinoSwitch(value: false, onChanged: (value){})
-                ],
-              ),
-        ));
-  }
-}*/
-
-import 'package:first_apps/splash.dart';
 import 'package:flutter/material.dart';
 
-import 'home_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -54,8 +12,73 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Splash(),
+      home: Home(),
     );
   }
 }
+class Home extends StatelessWidget {
+  const Home({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    
+    print(MediaQuery.of(context).size);
+    print(MediaQuery.of(context).size.width);
+    print(MediaQuery.of(context).size.height);
+    print(MediaQuery.of(context).displayFeatures);
+    print(MediaQuery.of(context).orientation);
+    print(MediaQuery.of(context).gestureSettings);
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: Text("Home"),
+      ),
+      /*body: Center(
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 8,
+          children: [
+            Text(MediaQuery.orientationOf(context).toString()),
+            Text(MediaQuery.orientationOf(context).toString()),
+            Text(MediaQuery.orientationOf(context).toString()),
+            Text(MediaQuery.orientationOf(context).toString()),
+            Text(MediaQuery.orientationOf(context).toString()),
+            Text(MediaQuery.orientationOf(context).toString()),
+            Text(MediaQuery.orientationOf(context).toString()),
+          ],
+        ),
+      ),*/
+     /* body: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+        if(constraints.maxWidth< 600){
+          return Center(child: Text("Mobile"));
+        }else if(constraints.maxWidth< 800){
+          return Center(child: Text("Laptop"));
+        }else if(constraints.maxWidth< 1200){
+          return Center(child: Text("Desktop"));
+        }
+
+        return Center(child: Text("Version 2"));
+      },),*/
+
+      body: OrientationBuilder(builder: ( context, Orientation) {
+        if(Orientation == Orientation.index){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.green,
+          );
+        }else{
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.black,
+          );
+        }
+
+
+      },),
+    );
+  }
+}
+
 
