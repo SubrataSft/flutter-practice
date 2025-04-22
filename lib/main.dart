@@ -1,12 +1,10 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(
-  DevicePreview(
-    enabled: true,
-    builder: (context) => MyApp(), // Wrap your app
-  ),
-);
+import 'home_screen.dart';
+
+void main(){
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -14,49 +12,33 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
-        home: HomeScreen());
-  }
-}
+      title: "Home",
+      home: HomeScreen(),
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.red,
+          foregroundColor: Colors.white
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue)
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue)
+          ),
+          errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red)
+          ),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue)
+          ),
+        ),
+       elevatedButtonTheme: ElevatedButtonThemeData(
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.green, title: Text("HomeScreen")),
-      body: Column(
-        children: [
-          // Expanded(
-          //   flex: 3,
-          //   child: Container(height: 100, width: 100, color: Colors.green),
-          // ),
-          // Flexible(
-          //   flex: 3,
-          //   fit: FlexFit.tight,
-          //   child: Container(height: 100, width: 100, color: Colors.red),
-          // ),
-          // Flexible(
-          //   fit: FlexFit.tight,
-          //   child: Container(height: 100, width: 100, color: Colors.yellow),
-          // ),
-          /* AspectRatio(aspectRatio: 16/16,child: Container(color: Colors.red,),) */
-       SizedBox(
-         height: 200,
-         width: 100,
-         child: FractionallySizedBox(
-           heightFactor: 1,
-           widthFactor: 3,
-           child: Container(
-             color: Colors.black,
-           ),
-         ),
        )
-        ],
       ),
     );
   }
 }
+
+
