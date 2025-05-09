@@ -1,74 +1,24 @@
-import 'package:first_apps/produdct_list_screen.dart';
+import 'package:first_apps/ui/screen/todo_list/todo_list_screen.dart';
 import 'package:flutter/material.dart';
-
-class CrudApp extends StatelessWidget {
-  const CrudApp({super.key});
+class TodoApp extends StatelessWidget {
+  const TodoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const ProductListScreen(),
-      theme:_lightThemeData(),
-      darkTheme: _darkThemeData(),
-      themeMode: ThemeMode.system,
+        home: TodoListScreen(),
+    theme: _lightTheme(),
     );
   }
-  ThemeData _lightThemeData(){
+
+  ThemeData _lightTheme() {
     return ThemeData(
-      brightness: Brightness.light,
-        inputDecorationTheme: const InputDecorationTheme(
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.purple),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.purple),
-          ),
-          errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color:Colors.red)
-          ), focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color:Colors.red)
-        ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            fixedSize: const Size.fromWidth(double.maxFinite),
-            padding: const EdgeInsets.symmetric(horizontal: 13,vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            backgroundColor: Colors.purple,
-            foregroundColor: Colors.white,
-          ),
-        )
-    );
-  }
-  ThemeData _darkThemeData(){
-    return ThemeData(
-      brightness: Brightness.dark,
-        inputDecorationTheme: const InputDecorationTheme(
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.purple),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.purple),
-          ),
-          errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color:Colors.red)
-          ), focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color:Colors.red)
-        ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            fixedSize: const Size.fromWidth(double.maxFinite),
-            padding: const EdgeInsets.symmetric(horizontal: 13,vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            backgroundColor: Colors.purple,
-            foregroundColor: Colors.white,
-          ),
-        )
-    );
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        fixedSize: Size.fromWidth(double.maxFinite),
+        padding: EdgeInsets.symmetric(vertical: 12),
+      )
+    )
+  );
   }
 }
