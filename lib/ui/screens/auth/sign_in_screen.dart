@@ -1,10 +1,16 @@
+import 'package:first_apps/data/models/network_response.dart';
+import 'package:first_apps/data/network_caller/network_caller.dart';
+import 'package:first_apps/data/utilitis/urls.dart';
 import 'package:first_apps/ui/screens/auth/email_verification_screen.dart';
 import 'package:first_apps/ui/screens/auth/sign_up_screen.dart';
 import 'package:first_apps/ui/screens/main_bottom_nav_screen.dart';
 import 'package:first_apps/ui/utility/app_colors.dart';
 import 'package:first_apps/ui/widgets/background_widget.dart';
+import 'package:first_apps/ui/widgets/snack_bar_message.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import '../../utility/app_constants.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -17,12 +23,15 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
+  bool _showPassword = false;
+  bool _signInApiInProgress = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundWidget(
         child: Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           key: _formState,
           child: SafeArea(
             child: Padding(
@@ -30,48 +39,73 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 90),
+                  const SizedBox(height: 90),
                   Text(
                     "Get Started With",
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
 
                   TextFormField(
                     controller: _emailTEController,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(hintText: "Email"),
+                    decoration: const InputDecoration(hintText: "Email"),
                     validator: (String? value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return "Write your email";
+                      if (value?.trim().isEmpty ?? true) {
+                        return "Write your email address";
+                      }
+                      if (AppConstants.emailRexExp.hasMatch(value!) == false) {
+                        return "Enter a valid email";
                       }
                       return null;
                     },
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   TextFormField(
                     controller: _passwordTEController,
-                    decoration: InputDecoration(hintText: "Password"),
+                    obscureText: _showPassword == false,
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          _showPassword = !_showPassword;
+                          if (mounted) {
+                            setState(() {});
+                          }
+                        },
+                        icon: Icon(
+                          _showPassword
+                              ? Icons.remove_red_eye
+                              : Icons.visibility_off,
+                        ),
+                      ),
+                    ),
                     validator: (String? value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return "Write your email";
+                      if (value?.trim().isEmpty ?? true) {
+                        return "Write your password";
                       }
                       return null;
                     },
                   ),
-                  SizedBox(height: 12),
-                  ElevatedButton(
-                    onPressed: _onTapNextButton,
-                    child: Icon(Icons.arrow_circle_right_outlined),
+                  const SizedBox(height: 12),
+                  Visibility(
+                    visible: _signInApiInProgress == false,
+                    replacement: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    child: ElevatedButton(
+                      onPressed: _onTapNextButton,
+                      child: const Icon(Icons.arrow_circle_right_outlined),
+                    ),
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   TextButton(
                     onPressed: _onTapForgotButton,
-                    child: Text("Forgot Password"),
+                    child: const Text("Forgot Password"),
                   ),
                   RichText(
                     text: TextSpan(
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w400,
                         letterSpacing: 0.4,
@@ -80,7 +114,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       children: [
                         TextSpan(
                           text: " Sign In",
-                          style: TextStyle(color: AppColors.themColor),
+                          style: const TextStyle(color: AppColors.themColor),
                           recognizer:
                               TapGestureRecognizer()
                                 ..onTap = _onTapSingInButton,
@@ -96,24 +130,52 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
+
   void _onTapNextButton() {
-    Navigator.pushReplacement(
-      context,
-      (MaterialPageRoute(builder: (context) => MainBottomNavScreen())),
+    if (_formState.currentState!.validate()) {
+      _signUp();
+    }
+  }
+
+  Future<void> _signUp() async {
+    _signInApiInProgress = true;
+    if (mounted) {
+      setState(() {});
+    }
+    Map<String, dynamic> requestData = {
+      "email":_emailTEController.text.trim(),
+      "password":_passwordTEController.text
+    };
+    final NetworkResponse response = await NetworkCaller.postRequest(
+      Urls.login,
     );
+    _signInApiInProgress = false;
+    if (mounted) {
+      setState(() {});
+    }
+    if (response.isSuccess) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainBottomNavScreen()),
+      );
+    } else {
+      showSnackBarMessage(context, response.errorMessage?? "Email/Password is not correct!, Try again");
+    }
   }
 
   void _onTapSingInButton() {
     Navigator.push(
       context,
-      (MaterialPageRoute(builder: (context) => SignUpScreen())),
+      (MaterialPageRoute(builder: (context) => const SignUpScreen())),
     );
   }
 
   void _onTapForgotButton() {
     Navigator.push(
       context,
-      (MaterialPageRoute(builder: (context) => EmailVerificationScreen())),
+      (MaterialPageRoute(
+        builder: (context) => const EmailVerificationScreen(),
+      )),
     );
   }
 

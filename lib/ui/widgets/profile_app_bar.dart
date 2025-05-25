@@ -4,15 +4,19 @@ import 'package:flutter/material.dart';
 import '../utility/app_colors.dart';
 import 'network_cached_image.dart';
 
-AppBar profileAppBar(context,[bool formUpdateProfile = false]) {
+AppBar profileAppBar(context, [bool formUpdateProfile = false]) {
   return AppBar(
     backgroundColor: AppColors.themColor,
     leading: GestureDetector(
-      onTap: (){
-        if(formUpdateProfile){
+      onTap: () {
+        if (formUpdateProfile) {
           return;
         }
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateProfileScreen()));;
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => UpdateProfileScreen()),
+        );
+        ;
       },
       child: const Padding(
         padding: EdgeInsets.all(8.0),
@@ -20,11 +24,15 @@ AppBar profileAppBar(context,[bool formUpdateProfile = false]) {
       ),
     ),
     title: GestureDetector(
-      onTap: (){
-        if(formUpdateProfile){
+      onTap: () {
+        if (formUpdateProfile) {
           return;
         }
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateProfileScreen()));;
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => UpdateProfileScreen()),
+        );
+        ;
       },
       child: const Column(
         children: [
@@ -37,7 +45,6 @@ AppBar profileAppBar(context,[bool formUpdateProfile = false]) {
             style: TextStyle(fontSize: 12, color: Colors.white),
           ),
         ],
-
       ),
     ),
     actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.logout))],
